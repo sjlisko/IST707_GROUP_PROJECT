@@ -1,8 +1,8 @@
 ###IST707_Final_Project---2019 World Happiness Report
 ###ONL-Winter 2020
 ###Shawn Anderson
-###Holden Herrell
 ###Samantha Brennen-Lisko
+###Holden Herrell
 ###Jogesh Pugazhendhi
 ###Matthew Sutherland
 
