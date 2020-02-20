@@ -7,7 +7,6 @@
 ###Matthew Sutherland
 
 #Load Required Libraries
-
 library(useful)
 library(tm)
 library(stringr)
