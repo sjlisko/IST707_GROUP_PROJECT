@@ -1,0 +1,57 @@
+library(readxl)
+library(sqldf)
+
+library(ggplot2)
+library(tidyverse)
+
+#### Step 1: Load the Data for all years for Happiness data 
+
+setwd("C:\\Drive D\\WD\\happiness")
+happ2015 <-read.csv("2015.csv")
+happ2016 <-read.csv("2016.csv")
+happ2017 <-read.csv("2017.csv")
+happ2018 <-read.csv("2018.csv")
+happ2019 <-read.csv("2019.csv")
+
+
+##### renaming all data to simple columns names
+### removing error from happ 2015
+happ2015<-happ2015[,-5]
+colnames(happ2015)<-c("country","region","rank","score","GDP","family","life","freedom",
+                      "corruption","generosity","dystopia")
+
+happ2015<-happ2015[,-2]
+happ2015<-happ2015[,-10]
+
+#### Removing confidence intervals from 2016 data 
+happ2016<-happ2016[,-5:-6]
+colnames(happ2016)<-c("country","region","rank","score","GDP","family","life","freedom",
+                      "corruption","generosity","dystopia")
+
+happ2016<-happ2016[,-2]
+happ2016<-happ2016[,-10]
+
+##### removing whisker hign and low from 2017 data 
+happ2017<-happ2017[,-4:-5]
+colnames(happ2017)<-c("country","rank","score","GDP","family","life","freedom","generosity",
+                      "corruption","dystopia")
+### creating new column region for 2017 data since region is not present here 
+##happ2017$region=''
+
+##### renaming columns for 2018
+colnames(happ2018)<-c("rank","country","score","GDP","family","life","freedom","generosity","corruption")
+
+##### renaming columns for 2019
+colnames(happ2019)<-c("rank","country","score","GDP","family","life","freedom","generosity","corruption")
+
+
+happ_allyears<-sqldf("select '2015' as Year, rank,country,score,GDP,family,life,freedom,generosity,cast(corruption as real) as corruption from happ2015
+                      union all
+                      select '2015' as Year,rank,country,score,GDP,family,life,freedom,generosity,cast(corruption as real) as corruption from happ2016
+                      union all
+                      select '2015' as Year,rank,country,score,GDP,family,life,freedom,generosity,cast(corruption as real) as corruption from happ2017
+                      union all
+                      select '2015' as Year,rank,country,score,GDP,family,life,freedom,generosity,cast(corruption as real) as corruption from happ2018
+                      union all
+                      select '2015' as Year,rank,country,score,GDP,family,life,freedom,generosity,cast(corruption as real) as corruption from happ2019
+                      ")
